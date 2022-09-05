@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
 import "./App.css";
 
 import List from "./components/List";
@@ -17,8 +18,10 @@ function App() {
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fetchSubs = (): Promise<Array<SubsResponseFromApi>> => {
-      return fetch("http://localhost:3000/subs").then((res) => res.json());
+    const fetchSubs = () => {
+      return axios
+        .get<Array<SubsResponseFromApi>>("http://localhost:3000/subs")
+        .then((res) => res.data);
     };
 
     const mapFromApiToSubs = (
